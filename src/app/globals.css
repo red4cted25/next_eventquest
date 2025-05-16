@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Spline+Sans:wght@300..700&display=swap');
 
 :root {
   --background: #ffffff;
@@ -8,8 +9,14 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-sapphire: #0056B3;
+  --color-azure: #007BFF;
+  --color-jet: #333333;
+  --color-accent-gray: #B3B3B3;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-Quicksand: 'Quicksand', sans-serif;
+  --font-Spline: 'Spline Sans', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {

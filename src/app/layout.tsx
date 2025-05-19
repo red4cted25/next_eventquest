@@ -1,16 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import Header from "./components/Header";
 
 export const metadata: Metadata = {
   title: "EventQuest",
@@ -25,18 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`antialiased`}
       >
-        <header className="bg-zinc-700 py-8 sticky top-0">
-          <nav className="flex justify-between items-center max-w-full mx-auto px-18">
-            <div><a href="/" className="text-white font-bold text-lg">EventQuest</a></div>
-            <ul className="flex justify-end gap-4">
-              <li><a href="/" className="text-lg py-4 px-8 rounded-lg transition-colors duration-300 ease-in-out hover:bg-neutral-500">Home</a></li>
-              <li><a href="/events" className="text-lg py-4 px-8 rounded-lg transition-colors duration-300 ease-in-out hover:bg-neutral-500">Events</a></li>
-              <li><a href="/admins" className="text-lg py-4 px-8 rounded-lg transition-colors duration-300 ease-in-out hover:bg-neutral-500">Admin</a></li>
-            </ul>
-          </nav>
-        </header>
+        <Header />
 
         <main>
           {children}

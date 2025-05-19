@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from 'react';
-import { fetchEvents, EventData } from '../lib/ticketmaster';
+import { fetchEvents, EventData } from '../../Backend/lib/ticketmaster';
 import Event from './components/Event';
 import { FaCalendarDay, FaLocationArrow, FaSistrix } from "react-icons/fa6";
 

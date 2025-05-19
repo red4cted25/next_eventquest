@@ -1,8 +1,16 @@
-import Image from "next/image";
+"use client"
+import { useEffect, useState } from 'react';
+import { fetchEvents, EventData } from '../lib/ticketmaster';
+import Event from './components/Event';
 import { FaCalendarDay, FaLocationArrow, FaSistrix } from "react-icons/fa6";
 
 
 export default function Home() {
+  const [events, setEvents] = useState<EventData[]>([]);
+
+  useEffect(() => {
+    fetchEvents('keyword=music&').then(setEvents);
+  }, []);
 
   return (
     <>
@@ -34,7 +42,20 @@ export default function Home() {
         </div>
       </section>
       {/* Featured Events */}
-      
+      <section>
+        <h2 className="text-2xl font-bold">Featured Events</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {events.map((event) => (
+            <Event
+              key={event.id}
+              id={event.id}
+              src={event.src}
+              name={event.name}
+              city={event.city}
+            />
+          ))}
+        </div>
+      </section>
     </>
   );
 }

@@ -14,31 +14,12 @@ export default function Home() {
 
   return (
     <>
-      {/* Search */}
-      <section className="flex flex-col">
-        <div>
-          <div>
-            <FaCalendarDay />
-            <p>City or Zip Code</p>
-          </div>
-          <div>
-            <FaLocationArrow />
-            <p>All Dates</p>
-          </div>
-        </div>
-        <div className="border-t-2 py-2">
-          <div className="border-2 flex">
-            <input type="text" name="" id="" />
-            <FaSistrix />
-          </div>
-        </div>
-      </section>
       {/* Hero */}
-      <section className="flex flex-col">
+      <section className="flex flex-col bg-[url('https://res.cloudinary.com/drnaycy06/image/upload/v1747778304/istockphoto-1806011581-612x612_sdltch.jpg')] bg-cover bg-center h-[400px] text-white p-8">
         <h1>A Night of Fun</h1>
         <div className="flex">
-          <button type="button" className="text-white bg-azure rounded-md hover:bg-sapphire">Learn More</button>
-          <button type="button" className="text-white bg-azure rounded-md hover:bg-sapphire">Buy Tickets</button>
+          <button type="button" className=" bg-azure rounded-md hover:bg-sapphire">Learn More</button>
+          <button type="button" className=" bg-azure rounded-md hover:bg-sapphire">Buy Tickets</button>
         </div>
       </section>
       {/* Featured Events */}

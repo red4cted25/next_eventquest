@@ -33,7 +33,6 @@ export default function LoginPage() {
   return (
     <main className="min-h-screen w-full bg-gradient-to-r from-[#0056B3] via-[#007BFF] to-[#0056B3] flex items-center justify-center px-4">
       <div className="max-w-[80vw] max-h-[80vh] w-full aspect-[1200/650] bg-white rounded-[10px] overflow-hidden flex shadow-2xl">
-        {/* Left: image with overlay & text */}
         <div className="relative w-1/2 h-full">
           <img
             src="/images/login-bg.png"

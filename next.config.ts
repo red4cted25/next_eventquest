@@ -15,6 +15,12 @@ const nextConfig: NextConfig = {
             hostname: 'images.universe.com',
             port: '',
             search: ''
+        },
+        {
+            protocol: 'https',
+            hostname: 'res.cloudinary.com',
+            port: '',
+            search: ''
         }
       ],
     }

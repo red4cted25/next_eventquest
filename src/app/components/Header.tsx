@@ -2,7 +2,9 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { RxHamburgerMenu, RxCross1 } from 'react-icons/rx'
-import { FaUser, FaSignOutAlt } from 'react-icons/fa';
+import { FaUser, FaSignOutAlt, FaSistrix, } from 'react-icons/fa';
+import { BiNavigation, BiCalendarAlt } from "react-icons/bi";
+
 
 const Header = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -37,14 +39,17 @@ const Header = () => {
             </div>
             
             {/* Desktop Navbar */}
-            <div className="hidden lg:flex w-full bg-gray-800 text-white justify-between items-center p-4">
+            <div className="hidden lg:flex w-full bg-jet text-white justify-between items-center p-4">
                 <div className="flex items-center space-x-8">
                     <h1 className="text-2xl font-bold">EventQuest<sup>®</sup></h1>
-                    <nav className="flex space-x-6">
-                        <a href="#" className="text-blue-400 hover:text-blue-300">Concerts</a>
-                        <a href="#" className="text-white hover:text-gray-300">Sports</a>
-                        <a href="#" className="text-white hover:text-gray-300">Arts, Theater & Comedy</a>
-                        <a href="#" className="text-white hover:text-gray-300">Family</a>
+                    <nav className="flex items-center">
+                        <a href="#" className="text-azure hover:text-sapphire px-4">Concerts</a>
+                        <span className="text-azure">|</span>
+                        <a href="#" className="text-white hover:text-gray-300 px-4">Sports</a>
+                        <span className="text-azure">|</span>
+                        <a href="#" className="text-white hover:text-gray-300 px-4">Arts, Theater & Comedy</a>
+                        <span className="text-azure">|</span>
+                        <a href="#" className="text-white hover:text-gray-300 px-4">Family</a>
                     </nav>
                 </div>
                 
@@ -57,29 +62,37 @@ const Header = () => {
             </div>
             
             {/* Search Bar */}
-            <div className="w-full bg-white lg:bg-jet p-2 flex justify-center">
-                <div className="w-full max-w-3xl flex flex-col border border-gray-300 rounded-md">
-                    <div className="flex items-center px-4 border-r border-gray-300">
-                        <RxCross1 size={18} className="text-gray-400 mr-2" />
-                        <input 
-                            type="text" 
-                            placeholder="City or Zip Code" 
-                            className="bg-transparent outline-none"
-                        />
+            <div className="w-full bg-white p-4 flex items-center justify-center text-black lg:bg-jet lg:py-8">
+                <div className="w-full max-w-6xl mx-auto flex flex-col lg:flex-row lg:shadow-2xl">
+                    {/* Location and Date Filters */}
+                    <div className="w-full flex justify-center mb-4 pb-4 border-b border-accent-gray lg:border-b-0 lg:mb-0 lg:w-2/5 lg:bg-white lg:py-4">
+                        {/* Location Filter */}
+                        <div className="flex items-center w-1/2 px-2 border-r border-accent-gray">
+                            <BiNavigation size={22} className="text-azure mr-2 flex-shrink-0" />
+                            <input 
+                                type="text" 
+                                placeholder="City or Zip Code" 
+                                className="bg-transparent outline-none w-full"
+                            />
+                        </div>
+                        
+                        {/* Date Filter */}
+                        <div className="flex items-center w-1/2 pl-2 lg:border-r lg:border-accent-gray">
+                            <BiCalendarAlt size={22} className="text-azure mr-2 flex-shrink-0" />
+                            <select className="bg-transparent outline-none w-full appearance-none cursor-pointer">
+                                <option>All Dates</option>
+                            </select>
+                        </div>
                     </div>
-                    <div className="flex items-center px-4 border-r border-gray-300">
-                        <RxCross1 size={18} className="text-gray-400 mr-2" />
-                        <select className="bg-transparent outline-none">
-                        <option>All Dates</option>
-                        </select>
-                    </div>
-                    <div className="flex-grow flex items-center px-4">
+                    
+                    {/* Search Input */}
+                    <div className="w-full flex items-center px-4 py-3 border border-accent-gray rounded-md lg:border-none lg:w-3/5 lg:bg-white lg:rounded-none">
                         <input 
                             type="text" 
                             placeholder="Search by Artist, Event, or Venue" 
                             className="bg-transparent outline-none flex-grow"
                         />
-                        <RxCross1 size={18} className="text-gray-400" />
+                        <FaSistrix size={22} className="text-azure flex-shrink-0 cursor-pointer" />
                     </div>
                 </div>
             </div>

@@ -31,9 +31,9 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen w-full bg-gradient-to-r from-[#0056B3] via-[#007BFF] to-[#0056B3] flex items-center justify-center px-4">
-      <div className="max-w-[80vw] max-h-[80vh] w-full aspect-[1200/650] bg-white rounded-[10px] overflow-hidden flex shadow-2xl">
-        <div className="relative w-1/2 h-full">
+    <main className="min-h-screen bg-gradient-to-tr from-[#0056B3] via-[#007BFF] to-[#0056B3] flex items-center justify-center px-4 py-12">
+      <div className="hidden md:flex max-w-[1200px] w-full aspect-[1200/650] bg-white rounded-[10px] overflow-hidden shadow-2xl">
+      <div className="relative w-1/2 h-full">
           <img
             src="/images/login-bg.png"
             alt="Live events"
@@ -109,6 +109,93 @@ export default function LoginPage() {
           </p>
         </div>
       </div>
+
+      <div className="block md:hidden w-full max-w-xs">
+        <img
+          src="/images/Person.png"
+          alt="User icon"
+          className="w-28 h-28 mx-auto mb-6"
+        />
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {error && (
+            <p className="text-red-300 text-sm text-center">{error}</p>
+          )}
+
+      <div>
+        <label
+          htmlFor="email"
+          className="block text-white mb-1 text-sm font-medium"
+        >
+          Email
+        </label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          value={form.email}
+          onChange={handleChange}
+          placeholder="you@example.com"
+          className="
+            w-full
+            border-b border-white
+            bg-transparent
+            text-white placeholder-white
+            pb-2
+            focus:outline-none focus:border-[#007BFF]
+            transition
+          "
+          required
+        />
+      </div>
+
+      <div>
+        <label
+          htmlFor="password"
+          className="block text-white mb-1 text-sm font-medium"
+        >
+          Password
+        </label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          value={form.password}
+          onChange={handleChange}
+          placeholder="••••••••"
+          className="
+            w-full
+            border-b border-white
+            bg-transparent
+            text-white placeholder-white
+            pb-2
+            focus:outline-none focus:border-[#007BFF]
+            transition
+          "
+          required
+        />
+      </div>
+
+      <button
+        type="submit"
+        className="
+          w-full
+          bg-[#007BFF] hover:bg-[#0056B3]
+          text-white py-3 rounded-full font-semibold
+          transition
+        "
+      >
+        Log In
+      </button>
+    </form>
+
+    <p className="mt-6 text-center text-white text-sm">
+      Don’t have an account?{' '}
+      <a href="/signup" className="underline">
+        Sign up
+      </a>
+    </p>
+  </div>
     </main>
   )
 }

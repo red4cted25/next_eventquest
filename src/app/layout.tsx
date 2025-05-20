@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "./components/Header";
+import ConditionalHeader from './components/ConditionalHeader'
 
 export const metadata: Metadata = {
   title: "EventQuest",
@@ -17,7 +17,7 @@ export default function RootLayout({
       <body
         className={`antialiased`}
       >
-        <Header />
+        <ConditionalHeader />
 
         <main>
           {children}

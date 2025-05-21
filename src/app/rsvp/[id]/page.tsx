@@ -83,79 +83,88 @@ const renderStars = (rating: number) => {
 };
 
 return (
-    <div className="flex flex-col w-full max-w-md mx-auto bg-white">
+    <div className="flex flex-col w-full max-w-md mx-auto bg-white lg:max-w-6xl lg:flex-row lg:flex-wrap lg:px-6 lg:pt-4">
     {/* Breadcrumbs */}
-    <div className="p-2 text-xs">
-        <Link href="/concerts" className="text-accent-gray">Concerts</Link> &gt; <Link href="/concerts/rock" className="text-accent-gray">Rock</Link> &gt; <span>{event.name}</span>
+    <div className="p-2 text-xs lg:w-full lg:p-4 lg:text-sm">
+        <Link href="/classification" className="text-accent-gray hover:underline">Concerts</Link> &gt; <Link href="/concerts/rock" className="text-accent-gray hover:underline">Rock</Link> &gt; <span>{event.name}</span>
     </div>
     
-    {/* Event Header */}
-    <div className="px-4 pt-2">
-        <h1 className="text-3xl font-bold">{event.name}</h1>
-    </div>
-    
-    {/* Event Image */}
-    <div className="p-4">
-        {event.src && (
-        <div className="w-full relative">
-            <Image 
-            src={event.src} 
-            alt={event.name} 
-            width={500}
-            height={700}
-            className="w-full h-auto"
-            />
+    {/* Left column on desktop */}
+    <div className="lg:w-1/2 lg:pr-8">
+        {/* Event Header */}
+        <div className="px-4 pt-2 lg:px-0 lg:pt-0">
+        <h1 className="text-3xl font-bold lg:text-4xl">{event.name}</h1>
         </div>
+        
+        {/* Event Image */}
+        <div className="p-4 lg:px-0 lg:py-6">
+        {event.src && (
+            <div className="w-full relative">
+            <Image 
+                src={event.src} 
+                alt={event.name} 
+                width={500}
+                height={700}
+                className="w-full h-auto rounded-lg shadow-md"
+            />
+            </div>
         )}
+        </div>
     </div>
     
-    {/* Event Details */}
-    <div className="px-4">
+    {/* Right column on desktop */}
+    <div className="lg:w-1/2">
+        {/* Event Details - Styled as a card on desktop */}
+        <div className="px-4 lg:bg-gray-50 lg:p-6 lg:rounded-lg lg:shadow-sm lg:mt-32">
         <div className="mb-4">
-        <h2 className="font-bold text-lg">When</h2>
-        <p className="text-accent-gray">{event.date || "Date TBA"}</p>
-        <p className="text-accent-gray">{event.time || "Time TBA"}</p>
+            <h2 className="font-bold text-lg lg:text-xl">When</h2>
+            <p className="text-accent-gray lg:text-lg">{event.date || "Date TBA"}</p>
+            <p className="text-accent-gray lg:text-lg">{event.time || "Time TBA"}</p>
         </div>
         
         <div className="mb-4">
-        <h2 className="font-bold text-lg">Where</h2>
-        <p className="text-accent-gray">{event.city || "City TBA"}</p>
-        <p className="text-accent-gray">{event.venue || "Venue TBA"}</p>
+            <h2 className="font-bold text-lg lg:text-xl">Where</h2>
+            <p className="text-accent-gray lg:text-lg">{event.city || "City TBA"}</p>
+            <p className="text-accent-gray lg:text-lg">{event.venue || "Venue TBA"}</p>
         </div>
         
         {/* Buy Tickets Button */}
         <div className="my-4 flex justify-center">
-        <button 
-            className="bg-blue-500 text-white px-8 py-2 rounded-full font-medium"
-        >
+            <button 
+            className="bg-blue-500 text-white px-8 py-2 rounded-full font-medium hover:bg-blue-600 transition-colors lg:px-12 lg:py-3 lg:text-lg"
+            >
             Buy Tickets
-        </button>
+            </button>
+        </div>
         </div>
     </div>
     
-    {/* Reviews Section - Horizontal line separator */}
-    <div className="border-t border-gray-200 mt-2"></div>
-    
-    {/* Reviews Section */}
-    <div className="p-4">
-        <h2 className="font-bold text-lg mb-2">Reviews</h2>
+    {/* Reviews Section - Full width on desktop */}
+    <div className="w-full">
+        {/* Reviews Section - Horizontal line separator */}
+        <div className="border-t border-gray-200 mt-2 lg:my-8"></div>
         
-        <div className="space-y-6">
-        {reviews.map((review, index) => (
-            <div key={index} className="border-b border-gray-200 pb-4">
-            <div className="flex mb-1">
+        {/* Reviews Section */}
+        <div className="p-4 lg:p-0">
+        <h2 className="font-bold text-lg mb-2 lg:text-2xl lg:mb-6">Reviews</h2>
+        
+        <div className="space-y-6 lg:grid lg:grid-cols-2 lg:gap-8 lg:space-y-0">
+            {reviews.map((review, index) => (
+            <div key={index} className="border-b border-gray-200 pb-4 lg:border lg:p-4 lg:rounded-lg lg:shadow-sm">
+                <div className="flex mb-1">
                 {renderStars(review.rating)}
-            </div>
-            <h3 className="font-semibold">{review.title}</h3>
-            <p className="text-sm text-accent-gray">{review.body}</p>
-            <div className="flex items-center mt-2 text-sm">
-                <div className="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center mr-2">
-                <FaUser className="text-gray-500 text-xs" />
                 </div>
-                <span className="text-xs">{review.reviewer}</span>
+                <h3 className="font-semibold lg:text-lg">{review.title}</h3>
+                <p className="text-sm text-accent-gray lg:text-base">{review.body}</p>
+                <div className="flex items-center mt-2 text-sm">
+                <div className="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                    <FaUser className="text-gray-500 text-xs" />
+                </div>
+                <span className="text-xs lg:text-sm">{review.reviewer}</span>
+                </div>
             </div>
-            </div>
-        ))}
+            ))}
+        </div>
         </div>
     </div>
     </div>

@@ -83,7 +83,7 @@ const renderStars = (rating: number) => {
 };
 
 return (
-    <div className="flex flex-col w-full max-w-md mx-auto bg-white lg:max-w-6xl lg:flex-row lg:flex-wrap lg:px-6 lg:pt-4">
+    <div className="flex flex-col w-full max-w-md mx-auto bg-white lg:max-w-6xl lg:flex-row lg:flex-wrap lg:px-6 lg:pt-4 lg:mb-12">
     {/* Breadcrumbs */}
     <div className="p-2 text-xs lg:w-full lg:p-4 lg:text-sm">
         <Link href="/classification" className="text-accent-gray hover:underline">Concerts</Link> &gt; <Link href="/concerts/rock" className="text-accent-gray hover:underline">Rock</Link> &gt; <span>{event.name}</span>

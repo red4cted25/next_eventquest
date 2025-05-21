@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ConditionalHeader from './components/ConditionalHeader'
+import Footer from './components/Footer'
 
 export const metadata: Metadata = {
   title: "EventQuest",
@@ -23,9 +24,7 @@ return (
           {children}
         </main>
         
-        <footer>
-          <p></p>
-        </footer>
+        <Footer/>
       </body>
     </html>
   );

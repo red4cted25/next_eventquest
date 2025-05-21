@@ -16,10 +16,10 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <section className="flex flex-col bg-[url('https://res.cloudinary.com/drnaycy06/image/upload/v1747830908/istockphoto-1806011581-612x612_gjuwu0.jpg')] bg-cover bg-center h-[400px] text-white p-8 justify-center items-center">
-        <h1 className="text-4xl font-bold mb-6 text-center">A Night Of Fun</h1>
+        <h1 className="text-6xl font-bold mb-6 text-center text-shadow-black text-shadow-md lg:text-shadow-sm">A Night Of Fun</h1>
         <div className="flex gap-4">
-          <button type="button" className="px-4 py-2 bg-blue-600 rounded-md hover:bg-blue-800 font-medium">Learn More</button>
-          <button type="button" className="px-4 py-2 bg-blue-600 rounded-md hover:bg-blue-800 font-medium">Buy Tickets</button>
+          <button type="button" className="px-6 py-4 text-xl bg-blue-600 rounded-md hover:bg-blue-800 font-medium">Learn More</button>
+          <button type="button" className="px-6 py-4 text-xl bg-blue-600 rounded-md hover:bg-blue-800 font-medium">Buy Tickets</button>
         </div>
       </section>
 

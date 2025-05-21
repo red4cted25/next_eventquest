@@ -1,14 +1,46 @@
 "use client"
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { RxHamburgerMenu, RxCross1 } from 'react-icons/rx'
-import { FaUser, FaSignOutAlt, FaSistrix, } from 'react-icons/fa';
-import { BiNavigation, BiCalendarAlt } from "react-icons/bi";
+import { FaUser, FaSignOutAlt, FaSistrix, FaTicketAlt } from 'react-icons/fa';
+import { BiNavigation, BiCalendarAlt, BiUserCircle, BiCog } from "react-icons/bi";
 
+// Define user type
+type User = {
+    _id: string;
+    name: string;
+    email: string;
+};
 
 const Header = () => {
+    const router = useRouter();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [accountMenuOpen, setAccountMenuOpen] = useState(false);
+    const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState(true);
+    
+    // Fetch user data on component mount
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const response = await fetch('/api/auth/user');
+                if (response.ok) {
+                    const userData = await response.json();
+                    setUser(userData);
+                } else {
+                    setUser(null);
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+                setUser(null);
+            } finally {
+                setLoading(false);
+            }
+        };
+        
+        fetchUser();
+    }, []);
     
     const toggleMobileMenu = () => {
         setMobileMenuOpen(!mobileMenuOpen);
@@ -19,6 +51,31 @@ const Header = () => {
         setAccountMenuOpen(!accountMenuOpen);
         if (mobileMenuOpen) setMobileMenuOpen(false);
     };
+    
+    const handleSignOut = async () => {
+        try {
+            const response = await fetch('/api/auth/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            
+            if (response.ok) {
+                setUser(null);
+                setAccountMenuOpen(false);
+                router.push('/');
+                router.refresh();
+            }
+        } catch (error) {
+            console.error('Error signing out:', error);
+        }
+    };
+    
+    const navigateTo = (path: string) => {
+        router.push(path);
+        setAccountMenuOpen(false);
+    };
 
     return (
         <div className="w-full">
@@ -28,7 +85,7 @@ const Header = () => {
                     <button onClick={toggleMobileMenu} className="mr-2">
                         <RxHamburgerMenu size={24} />
                     </button>
-                    <h1 className="text-2xl">EventQuest<sup>®</sup></h1>
+                    <Link href='/' className="m-1 text-2xl">EventQuest<sup>®</sup></Link>
                 </div>
                 
                 <div className="flex items-center">
@@ -41,15 +98,15 @@ const Header = () => {
             {/* Desktop Navbar */}
             <div className="hidden lg:flex w-full bg-jet text-white justify-between items-center p-4">
                 <div className="flex items-center space-x-8">
-                    <h1 className="text-2xl font-bold">EventQuest<sup>®</sup></h1>
+                    <Link href='/' className="m-1 text-2xl font-bold">EventQuest<sup>®</sup></Link>
                     <nav className="flex items-center">
-                        <a href="#" className="text-azure hover:text-sapphire px-4">Concerts</a>
+                        <Link href="#" className="text-azure hover:text-sapphire px-4">Concerts</Link>
                         <span className="text-azure">|</span>
-                        <a href="#" className="text-white hover:text-gray-300 px-4">Sports</a>
+                        <Link href="#" className="text-white hover:text-gray-300 px-4">Sports</Link>
                         <span className="text-azure">|</span>
-                        <a href="#" className="text-white hover:text-gray-300 px-4">Arts, Theater & Comedy</a>
+                        <Link href="#" className="text-white hover:text-gray-300 px-4">Arts, Theater & Comedy</Link>
                         <span className="text-azure">|</span>
-                        <a href="#" className="text-white hover:text-gray-300 px-4">Family</a>
+                        <Link href="#" className="text-white hover:text-gray-300 px-4">Family</Link>
                     </nav>
                 </div>
                 
@@ -57,7 +114,9 @@ const Header = () => {
                     <button onClick={toggleAccountMenu} className="hover:text-gray-300">
                         <FaUser size={24} />
                     </button>
-                    <span className="font-medium">My Account</span>
+                    <span className="font-medium">
+                        {loading ? 'Loading...' : user ? `${user.name}` : 'Sign In'}
+                    </span>
                 </div>
             </div>
             
@@ -106,66 +165,148 @@ const Header = () => {
                     </button>
                 </div>
                 <nav className="py-4">
-                <a href="#" className="px-4 py-3 border-b border-gray-800 flex justify-between items-center">
-                    <span className="font-medium">CONCERTS</span>
-                    <span className="text-lg">&rsaquo;</span>
-                </a>
-                <a href="#" className="px-4 py-3 border-b border-gray-800 flex justify-between items-center">
-                    <span className="font-medium">SPORTS</span>
-                    <span className="text-lg">&rsaquo;</span>
-                </a>
-                <a href="#" className="px-4 py-3 border-b border-gray-800 flex justify-between items-center">
-                    <span className="font-medium">ARTS, THEATER & COMEDY</span>
-                    <span className="text-lg">&rsaquo;</span>
-                </a>
-                <a href="#" className="px-4 py-3 border-b border-gray-800 flex justify-between items-center">
-                    <span className="font-medium">FAMILY</span>
-                    <span className="text-lg">&rsaquo;</span>
-                </a>
+                    <Link href="#" className="px-4 py-3 border-b border-gray-800 flex justify-between items-center">
+                        <span className="font-medium">CONCERTS</span>
+                        <span className="text-lg">&rsaquo;</span>
+                    </Link>
+                    <Link href="#" className="px-4 py-3 border-b border-gray-800 flex justify-between items-center">
+                        <span className="font-medium">SPORTS</span>
+                        <span className="text-lg">&rsaquo;</span>
+                    </Link>
+                    <Link href="#" className="px-4 py-3 border-b border-gray-800 flex justify-between items-center">
+                        <span className="font-medium">ARTS, THEATER & COMEDY</span>
+                        <span className="text-lg">&rsaquo;</span>
+                    </Link>
+                    <Link href="#" className="px-4 py-3 border-b border-gray-800 flex justify-between items-center">
+                        <span className="font-medium">FAMILY</span>
+                        <span className="text-lg">&rsaquo;</span>
+                    </Link>
                 </nav>
                 <div className="mt-8">
-                <div className="px-4 py-2 text-sm font-medium text-gray-400">My Events</div>
-                <a href="#" className="block px-4 py-2 border-b border-gray-800">RSVP</a>
-                <a href="#" className="block px-4 py-2 border-b border-gray-800">Events</a>
-                <a href="#" className="block px-4 py-2 border-b border-gray-800">Reviews</a>
-                <a href="#" className="block px-4 py-2 border-b border-gray-800">My Account</a>
+                    <div className="px-4 py-2 text-sm font-medium text-gray-400">My Events</div>
+                    <Link href="#" className="block px-4 py-2 border-b border-gray-800">RSVP</Link>
+                    <Link href="#" className="block px-4 py-2 border-b border-gray-800">Events</Link>
+                    <Link href="#" className="block px-4 py-2 border-b border-gray-800">Reviews</Link>
+                    {user ? (
+                        <Link href="#" className="block px-4 py-2 border-b border-gray-800">My Account</Link>
+                    ) : (
+                        <button 
+                            onClick={() => navigateTo('/login')}
+                            className="block w-full text-left px-4 py-2 border-b border-gray-800"
+                        >
+                            Login / Sign Up
+                        </button>
+                    )}
                 </div>
             </div>
             
             {/* Right side menu - sliding from right */}
             <div className={`fixed inset-y-0 right-0 w-3/4 lg:w-1/3 max-w-sm bg-white text-gray-800 transform ${accountMenuOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out z-50`}>
                 <div className="flex justify-between items-center p-4 border-b border-gray-200">
-                    <h2 className="text-xl font-bold">Welcome back!</h2>
+                    <h2 className="text-xl font-bold">
+                        {loading ? 'Loading...' : user ? `Welcome back, ${user.name}!` : 'Welcome to EventQuest'}
+                    </h2>
                     <button onClick={toggleAccountMenu}>
                         <RxCross1 size={24} className="text-blue-500" />
                     </button>
                 </div>
-                <div className="px-4 py-2">
-                    <div className="text-sm font-medium text-gray-500">Name</div>
-                </div>
-                <nav className="py-4">
-                    <div className="border-b border-gray-200">
-                        <div className="px-4 py-3 flex justify-between items-center">
-                            <span className="font-medium">My Tickets</span>
-                            <span className="text-lg">&darr;</span>
+                
+                {loading ? (
+                    <div className="p-8 flex justify-center">
+                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-azure"></div>
+                    </div>
+                ) : user ? (
+                    /* Logged in user content */
+                    <nav className="py-4">
+                        <button 
+                            onClick={() => navigateTo('/tickets')}
+                            className="w-full border-b border-gray-200"
+                        >
+                            <div className="px-4 py-3 flex justify-between items-center">
+                                <div className="flex items-center">
+                                    <FaTicketAlt className="text-azure mr-3" size={20} />
+                                    <span className="font-medium">My Tickets</span>
+                                </div>
+                                <span className="text-lg">&rsaquo;</span>
+                            </div>
+                        </button>
+                        
+                        <button 
+                            onClick={() => navigateTo('/profile')}
+                            className="w-full border-b border-gray-200"
+                        >
+                            <div className="px-4 py-3 flex justify-between items-center">
+                                <div className="flex items-center">
+                                    <BiUserCircle className="text-azure mr-3" size={20} />
+                                    <span className="font-medium">My Profile</span>
+                                </div>
+                                <span className="text-lg">&rsaquo;</span>
+                            </div>
+                        </button>
+                        
+                        <button 
+                            onClick={() => navigateTo('/settings')}
+                            className="w-full border-b border-gray-200"
+                        >
+                            <div className="px-4 py-3 flex justify-between items-center">
+                                <div className="flex items-center">
+                                    <BiCog className="text-azure mr-3" size={20} />
+                                    <span className="font-medium">Account Settings</span>
+                                </div>
+                                <span className="text-lg">&rsaquo;</span>
+                            </div>
+                        </button>
+                        
+                        <button 
+                            onClick={() => navigateTo('/rsvp')}
+                            className="w-full border-b border-gray-200"
+                        >
+                            <div className="px-4 py-3 flex justify-between items-center">
+                                <div className="flex items-center">
+                                    <BiCalendarAlt className="text-azure mr-3" size={20} />
+                                    <span className="font-medium">My RSVPs</span>
+                                </div>
+                                <span className="text-lg">&rsaquo;</span>
+                            </div>
+                        </button>
+                        
+                        <button 
+                            onClick={handleSignOut}
+                            className="w-full px-4 py-3 flex items-center text-red-500"
+                        >
+                            <FaSignOutAlt className="mr-3" size={20} />
+                            <span className="font-medium">Sign Out</span>
+                        </button>
+                    </nav>
+                ) : (
+                    /* Guest user content */
+                    <div className="p-4">
+                        <p className="text-gray-600 mb-6">Log in to access your tickets, save events, and get personalized recommendations.</p>
+                        
+                        <button 
+                            onClick={() => navigateTo('/login')}
+                            className="w-full bg-azure text-white py-3 rounded-md font-medium mb-3"
+                        >
+                            Log In
+                        </button>
+                        
+                        <button 
+                            onClick={() => navigateTo('/signup')}
+                            className="w-full border border-azure text-azure py-3 rounded-md font-medium"
+                        >
+                            Create Account
+                        </button>
+                        
+                        <div className="mt-6 pt-6 border-t border-gray-200">
+                            <h3 className="font-medium mb-2">Popular in EventQuest</h3>
+                            <div className="space-y-2 text-sm text-gray-600">
+                                <Link href="#" className="block hover:text-azure">Concerts Near Me</Link>
+                                <Link href="#" className="block hover:text-azure">Sports Events</Link>
+                                <Link href="#" className="block hover:text-azure">Theater Performances</Link>
+                            </div>
                         </div>
                     </div>
-                    <div className="border-b border-gray-200">
-                        <div className="px-4 py-3 flex justify-between items-center">
-                            <span className="font-medium">My Profile</span>
-                            <span className="text-lg">&darr;</span>
-                        </div>
-                    </div>
-                    <div className="border-b border-gray-200">
-                        <div className="px-4 py-3 flex justify-between items-center">
-                            <span className="font-medium">My Settings</span>
-                            <span className="text-lg">&darr;</span>
-                        </div>
-                    </div>
-                    <div className="px-4 py-3">
-                        <span className="font-medium">Sign Out</span>
-                    </div>
-                </nav>
+                )}
             </div>
             
             {/* Overlay when menu is open */}

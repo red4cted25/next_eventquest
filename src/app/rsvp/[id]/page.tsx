@@ -10,7 +10,9 @@ export default function EventPage() {
 const params = useParams();
 const router = useRouter();
 const [event, setEvent] = useState<EventDetailData | null>(null);
+const [reviews, setReviews] = useState<any[]>([]);
 const [loading, setLoading] = useState(true);
+const [reviewsLoading, setReviewsLoading] = useState(true);
 
 useEffect(() => {
     const getEventDetails = async () => {
@@ -31,6 +33,31 @@ useEffect(() => {
     };
 
     getEventDetails();
+}, [params.id]);
+
+useEffect(() => {
+    const fetchReviews = async () => {
+    if (!params.id) return;
+    
+    try {
+        setReviewsLoading(true);
+        const response = await fetch(`/api/reviews/${params.id}`);
+        
+        if (!response.ok) {
+        throw new Error('Failed to fetch reviews');
+        }
+        
+        const data = await response.json();
+        setReviews(data);
+    } catch (error) {
+        console.error("Error fetching reviews:", error);
+        setReviews([]);
+    } finally {
+        setReviewsLoading(false);
+    }
+    };
+
+    fetchReviews();
 }, [params.id]);
 
 if (loading) {
@@ -55,23 +82,6 @@ if (!event) {
     </div>
     );
 }
-
-//NEED TO CONNECT TO DATA
-const reviews = [
-    {
-    title: "Amazing show!",
-    body: "One of the best concerts I've been to this year.",
-    reviewer: "Concert Fan",
-    rating: 5
-    },
-    {
-    title: "Great energy",
-    body: "The band was incredible. Venue could be better though.",
-    reviewer: "Music Lover",
-    rating: 4
-    }
-];
-
 
 const renderStars = (rating: number) => {
     return Array(5).fill(0).map((_, i) => (
@@ -148,23 +158,33 @@ return (
         <div className="p-4 lg:p-0">
         <h2 className="font-bold text-lg mb-2 lg:text-2xl lg:mb-6">Reviews</h2>
         
-        <div className="space-y-6 lg:grid lg:grid-cols-2 lg:gap-8 lg:space-y-0">
-            {reviews.map((review, index) => (
-            <div key={index} className="border-b border-gray-200 pb-4 lg:border lg:p-4 lg:rounded-lg lg:shadow-sm">
+        {reviewsLoading ? (
+            <div className="flex justify-center items-center h-32">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+        ) : reviews.length > 0 ? (
+            <div className="space-y-6 lg:grid lg:grid-cols-2 lg:gap-8 lg:space-y-0">
+            {reviews.map((review) => (
+                <div key={review._id} className="border-b border-gray-200 pb-4 lg:border lg:p-4 lg:rounded-lg lg:shadow-sm">
                 <div className="flex mb-1">
-                {renderStars(review.rating)}
+                    {renderStars(review.rating)}
                 </div>
                 <h3 className="font-semibold lg:text-lg">{review.title}</h3>
                 <p className="text-sm text-accent-gray lg:text-base">{review.body}</p>
                 <div className="flex items-center mt-2 text-sm">
-                <div className="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                    <div className="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center mr-2">
                     <FaUser className="text-gray-500 text-xs" />
+                    </div>
+                    <span className="text-xs lg:text-sm">{review.reviewer}</span>
                 </div>
-                <span className="text-xs lg:text-sm">{review.reviewer}</span>
                 </div>
-            </div>
             ))}
-        </div>
+            </div>
+        ) : (
+            <div className="text-center py-8">
+            <p className="text-gray-500">No reviews yet for this event.</p>
+            </div>
+        )}
         </div>
     </div>
     </div>

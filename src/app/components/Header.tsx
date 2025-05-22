@@ -100,22 +100,22 @@ const Header = () => {
                 <div className="flex items-center space-x-8">
                     <Link href='/' className="m-1 text-2xl font-bold">EventQuest<sup>®</sup></Link>
                     <nav className="flex items-center">
-                        <Link href="#" className="text-azure hover:text-sapphire px-4">Concerts</Link>
+                        <Link href="/events?classificationId=KZFzniwnSyZfZ7v7nJ" className="text-azure hover:text-sapphire px-4">Concerts</Link>
                         <span className="text-azure">|</span>
-                        <Link href="#" className="text-white hover:text-gray-300 px-4">Sports</Link>
+                        <Link href="/events?classificationId=KZFzniwnSyZfZ7v7nE" className="text-white hover:text-gray-300 px-4">Sports</Link>
                         <span className="text-azure">|</span>
-                        <Link href="#" className="text-white hover:text-gray-300 px-4">Arts, Theater & Comedy</Link>
+                        <Link href="/events?classificationId=KZFzniwnSyZfZ7v7na" className="text-white hover:text-gray-300 px-4">Arts, Theater & Comedy</Link>
                         <span className="text-azure">|</span>
-                        <Link href="#" className="text-white hover:text-gray-300 px-4">Family</Link>
+                        <Link href="/events?classificationId=KZFzniwnSyZfZ7v7nn" className="text-white hover:text-gray-300 px-4">Family</Link>
                     </nav>
                 </div>
                 
                 <div className="flex items-center space-x-6">
                     <button onClick={toggleAccountMenu} className="hover:text-gray-300">
-                        <FaUser size={24} />
+                        <FaUser size={24} className="cursor-pointer" />
                     </button>
                     <span className="font-medium">
-                        {loading ? 'Loading...' : user ? `${user.name}` : 'Sign In'}
+                        {loading ? 'Loading...' : user ? `${user.name}` : <Link href="/login" >Log in</Link>}
                     </span>
                 </div>
             </div>
@@ -161,43 +161,27 @@ const Header = () => {
                 <div className="flex justify-between items-center p-4 border-b border-gray-700">
                     <h2 className="text-xl font-bold">EventQuest<sup>®</sup></h2>
                     <button onClick={toggleMobileMenu}>
-                        <RxCross1 size={24} />
+                        <RxCross1 size={24} className="cursor-pointer" />
                     </button>
                 </div>
                 <nav className="py-4">
-                    <Link href="#" className="px-4 py-3 border-b border-gray-800 flex justify-between items-center">
+                    <Link href="/events?classificationId=KZFzniwnSyZfZ7v7nJ" className="px-4 py-3 border-b border-gray-800 flex justify-between items-center">
                         <span className="font-medium">CONCERTS</span>
                         <span className="text-lg">&rsaquo;</span>
                     </Link>
-                    <Link href="#" className="px-4 py-3 border-b border-gray-800 flex justify-between items-center">
+                    <Link href="/events?classificationId=KZFzniwnSyZfZ7v7nE" className="px-4 py-3 border-b border-gray-800 flex justify-between items-center">
                         <span className="font-medium">SPORTS</span>
                         <span className="text-lg">&rsaquo;</span>
                     </Link>
-                    <Link href="#" className="px-4 py-3 border-b border-gray-800 flex justify-between items-center">
+                    <Link href="/events?classificationId=KZFzniwnSyZfZ7v7na" className="px-4 py-3 border-b border-gray-800 flex justify-between items-center">
                         <span className="font-medium">ARTS, THEATER & COMEDY</span>
                         <span className="text-lg">&rsaquo;</span>
                     </Link>
-                    <Link href="#" className="px-4 py-3 border-b border-gray-800 flex justify-between items-center">
+                    <Link href="/events?classificationId=KZFzniwnSyZfZ7v7nn" className="px-4 py-3 border-b border-gray-800 flex justify-between items-center">
                         <span className="font-medium">FAMILY</span>
                         <span className="text-lg">&rsaquo;</span>
                     </Link>
                 </nav>
-                <div className="mt-8">
-                    <div className="px-4 py-2 text-sm font-medium text-gray-400">My Events</div>
-                    <Link href="#" className="block px-4 py-2 border-b border-gray-800">RSVP</Link>
-                    <Link href="#" className="block px-4 py-2 border-b border-gray-800">Events</Link>
-                    <Link href="#" className="block px-4 py-2 border-b border-gray-800">Reviews</Link>
-                    {user ? (
-                        <Link href="#" className="block px-4 py-2 border-b border-gray-800">My Account</Link>
-                    ) : (
-                        <button 
-                            onClick={() => navigateTo('/login')}
-                            className="block w-full text-left px-4 py-2 border-b border-gray-800"
-                        >
-                            Login / Sign Up
-                        </button>
-                    )}
-                </div>
             </div>
             
             {/* Right side menu - sliding from right */}
@@ -207,7 +191,7 @@ const Header = () => {
                         {loading ? 'Loading...' : user ? `Welcome back, ${user.name}!` : 'Welcome to EventQuest'}
                     </h2>
                     <button onClick={toggleAccountMenu}>
-                        <RxCross1 size={24} className="text-blue-500" />
+                        <RxCross1 size={24} className="text-blue-500 cursor-pointer" />
                     </button>
                 </div>
                 
@@ -219,8 +203,8 @@ const Header = () => {
                     /* Logged in user content */
                     <nav className="py-4">
                         <button 
-                            onClick={() => navigateTo('/tickets')}
-                            className="w-full border-b border-gray-200"
+                            onClick={() => navigateTo('/user/tickets')}
+                            className="w-full border-b border-gray-200 cursor-pointer"
                         >
                             <div className="px-4 py-3 flex justify-between items-center">
                                 <div className="flex items-center">
@@ -232,8 +216,8 @@ const Header = () => {
                         </button>
                         
                         <button 
-                            onClick={() => navigateTo('/profile')}
-                            className="w-full border-b border-gray-200"
+                            onClick={() => navigateTo('/user/profile')}
+                            className="w-full border-b border-gray-200 cursor-pointer"
                         >
                             <div className="px-4 py-3 flex justify-between items-center">
                                 <div className="flex items-center">
@@ -245,8 +229,8 @@ const Header = () => {
                         </button>
                         
                         <button 
-                            onClick={() => navigateTo('/settings')}
-                            className="w-full border-b border-gray-200"
+                            onClick={() => navigateTo('/user/settings')}
+                            className="w-full border-b border-gray-200 cursor-pointer"
                         >
                             <div className="px-4 py-3 flex justify-between items-center">
                                 <div className="flex items-center">
@@ -258,21 +242,8 @@ const Header = () => {
                         </button>
                         
                         <button 
-                            onClick={() => navigateTo('/rsvp')}
-                            className="w-full border-b border-gray-200"
-                        >
-                            <div className="px-4 py-3 flex justify-between items-center">
-                                <div className="flex items-center">
-                                    <BiCalendarAlt className="text-azure mr-3" size={20} />
-                                    <span className="font-medium">My RSVPs</span>
-                                </div>
-                                <span className="text-lg">&rsaquo;</span>
-                            </div>
-                        </button>
-                        
-                        <button 
                             onClick={handleSignOut}
-                            className="w-full px-4 py-3 flex items-center text-red-500"
+                            className="w-full px-4 py-3 flex items-center text-red-500 cursor-pointer"
                         >
                             <FaSignOutAlt className="mr-3" size={20} />
                             <span className="font-medium">Sign Out</span>

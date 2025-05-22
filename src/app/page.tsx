@@ -6,11 +6,19 @@ import Footer from './components/Footer';
 
 export default function Home() {
   const [events, setEvents] = useState<EventData[]>([]);
-  const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    fetchEvents('keyword=music&').then(setEvents);
-  }, []);
+  fetchEvents('keyword=music&').then((fetchedEvents) => {
+    // Filter to only include unique event names
+    const uniqueEventsMap = new Map<string, EventData>();
+    fetchedEvents.forEach((event) => {
+      if (!uniqueEventsMap.has(event.name)) {
+        uniqueEventsMap.set(event.name, event);
+      }
+    });
+    setEvents(Array.from(uniqueEventsMap.values()));
+  });
+}, []);
 
   return (
     <div className="flex flex-col min-h-screen">

@@ -1,4 +1,5 @@
 import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaTiktok } from 'react-icons/fa6';
+import Link from 'next/link';
 
 const Footer = () => {
     return (
@@ -35,18 +36,16 @@ const Footer = () => {
                 <div>
                     <h3 className="text-sm font-bold mb-3">HELPFUL LINKS</h3>
                     <ul className="space-y-2 text-sm">
-                        <li>My Events</li>
-                        <li>RSVP</li>
-                        <li>Events</li>
-                        <li>Reviews</li>
-                        <li>My Account</li>
+                        <Link href="/user/tickets">My Events</Link>
+                        <Link href="/events">Events</Link>
+                        <Link href="/user/profile">My Account</Link>
                     </ul>
                 </div>
                 </div>
 
                 {/* Copyright */}
                 <div className="text-xs border-t border-gray-700 pt-4">
-                <p>© 2025 EventQuest. All rights reserved.</p>
+                    <p>© 2025 EventQuest. All rights reserved.</p>
                 </div>
             </div>
         </footer>

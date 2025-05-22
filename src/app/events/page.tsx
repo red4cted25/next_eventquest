@@ -199,7 +199,7 @@ export default async function EventsPage(props: {
               No events available in your selected area
             </p>
             <p className="text-gray-600">
-              Don’t worry, there are other events available below
+              Don't worry, there are other events available below
             </p>
           </div>
         )}
@@ -239,11 +239,7 @@ export default async function EventsPage(props: {
                 </div>
               </div>
               <Link
-                href={`https://www.ticketmaster.com/search?q=${encodeURIComponent(
-                  e.title
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`/rsvp/${e.id}`}
                 className="inline-flex items-center px-4 py-2 bg-black hover:bg-blue-800 text-white rounded transition"
               >
                 Find Tickets
